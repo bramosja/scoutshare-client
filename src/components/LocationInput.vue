@@ -1,9 +1,9 @@
 <template>
   <vue-google-autocomplete
-      ref="city"
+      ref="location"
       id="map"
       classname="form-control city-input model-input"
-      placeholder="City"
+      placeholder="Location"
       v-on:placechanged="getCityData"
       types="(cities)"
       country="us"
@@ -11,20 +11,20 @@
 </template>
 
 <script>
-  import VueGoogleAutocomplete from "vue-google-autocomplete";
+import VueGoogleAutocomplete from "vue-google-autocomplete";
 
-  export default {
+export default {
     components: { VueGoogleAutocomplete },
 
     data: function () {
       return {
-        city: "",
+        location: []
       };
     },
 
     mounted() {
       // Here we make focus on the user input
-      this.$refs.city.focus();
+      this.$refs.location.focus();
     },
 
     methods: {
@@ -36,8 +36,7 @@
        */
       // eslint-disable-next-line
       getCityData: function (cityData, placeResultData, id) {
-        this.city = cityData;
-        console.log(this.city)
+        this.location = [ cityData.locality, cityData.administrative_area_level_1, cityData.country]
       },
     },
   };
