@@ -69,6 +69,21 @@ button:focus-visible {
   padding: 2em;
 }
 
+.model-input {
+  max-width: 20em;
+}
+
+.inputs-container {
+  display: flex;
+  flex-direction: column;
+  max-width: 30em;
+  padding: 0 10em;
+}
+
+.create-button {
+  max-width: 5em;
+}
+
 #app {
   margin: 0 auto;
   text-align: center;

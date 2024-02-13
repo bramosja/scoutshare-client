@@ -3,21 +3,34 @@
     <h1>Locations</h1>
 
     <!--  Create or Post  -->
-    <input type="text"
-           v-model="name"
-           placeholder="Name"
-           class="name-input"/>
-    <input type="text"
-           v-model="city"
-           placeholder="City"
-           class="city-input"/>
+    <div class="inputs-container">
+      <input type="text"
+             v-model="name"
+             placeholder="Name"
+             class="name-input model-input"/>
 
-    <!--  only render if editing location  -->
-    <button v-if="isEditing" @click="updateLocation">Update</button>
-    <button v-if="isEditing" @click="cancelEdit">Cancel</button>
+      <LocationInput v-model="city"></LocationInput>
 
-    <!--  only render if not editing location  -->
-    <button v-else @click="createLocation">Create</button>
+      <!--  only render if editing location  -->
+      <button
+          class="create-button"
+          v-if="isEditing"
+          @click="updateLocation"
+      >Update</button>
+
+      <button
+          class="create-button"
+          v-if="isEditing"
+          @click="cancelEdit"
+      >Cancel</button>
+
+      <!--  only render if not editing location  -->
+      <button
+          class="create-button"
+          v-else @click="createLocation"
+      >Create</button>
+
+    </div>
 
     <!--  list of locations  -->
     <div v-for="location in locations" :key="location.id">
@@ -32,6 +45,8 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
+import LocationInput from "@/components/LocationInput.vue";
+
 
 const locations = ref([])
 const name = ref('')
@@ -57,33 +72,33 @@ const createLocation = async() => {
     })
   })
 
-  const data = await res.json()
+const data = await res.json()
 
-  locations.value.push(data)
-  name.value = ''
-  city.value = ''
-  location_id.value = 0;
+locations.value.push(data)
+name.value = ''
+city.value = ''
+location_id.value = 0;
 }
 const updateLocation = async() => {
-  const res = await fetch (`${API_URL}/${location_id.value}`,{
-    method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      name: name.value,
-      city: city.value,
-      id: location_id.value
-    })
+const res = await fetch (`${API_URL}/${location_id.value}`,{
+  method: 'PUT',
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({
+    name: name.value,
+    city: city.value,
+    id: location_id.value
   })
+})
 
-  const data = await res.json()
+const data = await res.json()
 
-  const index = locations.value.findIndex(location => location.id === data.id)
-  locations.value[index] = data
-  name.value = ''
-  city.value = ''
-  location_id.value = 0;
+const index = locations.value.findIndex(location => location.id === data.id)
+locations.value[index] = data
+name.value = ''
+city.value = ''
+location_id.value = 0;
 }
 
 const cancelEdit = () => {
@@ -116,18 +131,6 @@ const editLocation = async(id) => {
 
 <style scoped>
 .name-input {
-  width: 100%;
-  padding: 12px 20px;
-  margin: 8px 0;
-  box-sizing: border-box;
-  border: 2px solid #ccc;
-  background-color: #f8f8f8;
-  color: #111;
-  border-radius: 4px;
-  resize: vertical;
-}
-
-.city-input {
   width: 100%;
   padding: 12px 20px;
   margin: 8px 0;

@@ -1,15 +1,24 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <router-view></router-view>
+  <ul>
+    <li><router-link to="/locations">Locations</router-link></li>
+  </ul>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+// import LocationsItems from './components/LocationsItems.vue'
+// import LandingOpener from './components/LandingOpener.vue';
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    // LandingOpener,
+    // LocationsItems
+  },
+  mounted() {
+    let placesApiScript = document.createElement('script')
+    placesApiScript.setAttribute('src', `https://maps.googleapis.com/maps/api/js?key=${process.env.VUE_APP_GOOGLE_API_KEY}&libraries=places`)
+    document.head.appendChild(placesApiScript)
   }
 }
 </script>
