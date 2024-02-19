@@ -1,7 +1,8 @@
 <template>
+  <div id="nav">
+    <NavHeader></NavHeader>
+  </div>
   <div class="overlay">
-    <div><img id="logo-img" src="../assets/scoutshare_logo.webp" /></div>
-
     <div class="container">
       <div class="content">
         <h1>FIND THE PERFECT PLACE FOR YOUR SHOOT.</h1>
@@ -18,6 +19,7 @@
 </template>
 
 <script setup>
+import NavHeader from "@/components/Nav/NavHeader.vue";
 
 </script>
 
@@ -30,5 +32,14 @@
 .container {
   display: flex;
   justify-content: space-evenly;
+}
+
+#nav {
+  display: block;
+  width: auto;
+  div {
+    display: flex;
+    justify-content: space-between;
+  }
 }
 </style>
