@@ -1,49 +1,62 @@
 <template>
   <vue-google-autocomplete
       ref="location"
-      id="map"
-      classname="form-control city-input model-input"
+      id="auto-location"
+      classname="form-control location-input model-input"
       placeholder="Location"
-      v-on:placechanged="getCityData"
+      v-on:placechanged="getLocationData"
       types="(cities)"
       country="us"
   ></vue-google-autocomplete>
 </template>
 
-<script>
+<script setup>
 import VueGoogleAutocomplete from "vue-google-autocomplete";
+import {onMounted, onUpdated} from "vue";
 
-export default {
-    components: { VueGoogleAutocomplete },
+const props = defineProps(['dataLocation', 'isEditing'])
+const emit = defineEmits(["selectLocation"])
 
-    data: function () {
-      return {
-        location: []
-      };
-    },
+onMounted(() => {
 
-    mounted() {
-      // Here we make focus on the user input
-      this.$refs.location.focus();
-    },
+})
 
-    methods: {
-      /**
-       * When the location found
-       * @param {Object} cityData Data of the found location
-       * @param {Object} placeResultData PlaceResult object
-       * @param {String} id Input container ID
-       */
-      // eslint-disable-next-line
-      getCityData: function (cityData, placeResultData, id) {
-        this.location = [ cityData.locality, cityData.administrative_area_level_1, cityData.country]
-      },
-    },
-  };
+onUpdated(() => {
+  prefillLocation()
+})
+
+/**
+ * When the location found
+ * @param {Object} cityData Data of the found location
+ * @param {Object} placeResultData PlaceResult object
+ * @param {String} id Input container ID
+ */
+// eslint-disable-next-line
+const getLocationData = (locationData, placeResultData, id) => {
+  const location = [locationData.locality, locationData.administrative_area_level_1, locationData.country]
+  emit("selectLocation", location)
+}
+
+const prefillLocation = () => {
+  if (props.isEditing === true ) {
+    document.getElementById("auto-location").value = dataLocationString()
+  } else {
+    document.getElementById("auto-location").value = ''
+  }
+}
+
+const dataLocationString = () => {
+  let locationString = ''
+  props.dataLocation[0] != null ? locationString += `${props.dataLocation[0]}, ` : false
+  props.dataLocation[1] != null ? locationString += `${props.dataLocation[1]}, ` : false
+  props.dataLocation[2] != null ? locationString += `${props.dataLocation[2]}` : false
+
+  return locationString
+}
 </script>
 
 <style scoped>
-.city-input {
+.location-input {
   width: 100%;
   padding: 12px 20px;
   margin: 8px 0;
