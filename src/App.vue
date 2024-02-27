@@ -1,20 +1,20 @@
 <template>
+  <NavHeader></NavHeader>
   <router-view></router-view>
-  <ul>
-    <li><router-link to="/locations">Locations</router-link></li>
-    <li><router-link to="/sites">Sites</router-link></li>
-  </ul>
 </template>
 
 <script>
+import NavHeader from "@/components/Nav/NavHeader.vue";
+
 export default {
-  name: 'App'
+  name: 'App',
+  components: {NavHeader}
 }
 </script>
 
 <style>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: Filson pro, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;

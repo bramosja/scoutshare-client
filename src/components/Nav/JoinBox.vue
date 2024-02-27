@@ -1,6 +1,6 @@
 <template>
   <div class="button-link">
-    <a href="/">Join Now</a>
+    <a href="/">JOIN NOW</a>
   </div>
 </template>
 
